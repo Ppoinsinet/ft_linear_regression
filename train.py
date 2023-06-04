@@ -50,6 +50,15 @@ def compute_coefs(data, theta0, theta1):
     diff1 = learningRate * (1/length) * get_sum(data, theta0, theta1, 1)
     return [theta0 - diff0, theta1 - diff1]
 
+def compute_error(data, theta0, theta1):
+    result = 0
+
+    for it in data:
+        p = predict(theta0, theta1, it[0])
+        result += abs(p - it[1]) / it[1]
+
+    return 1 - (result/len(data))
+
 file = openFile()
 data = []
 normalized_data = []
@@ -67,10 +76,10 @@ theta1 = 0
 iterations = 0
 
 while 1:
-    # print("theta0 : ", theta0, " et theta1 : ", theta1)
     [theta0, theta1] = compute_coefs(normalized_data, theta0, theta1)
-    if iterations % 100000 == 0:
+    if iterations % 10000 == 0 and iterations > 0:
         print(str(iterations) + " iterations")
+        print("Accuracy : " + str(compute_error(normalized_data, theta0, theta1)))
         stop = input("stop ? (y/n) ")
         if stop == "y":
             break

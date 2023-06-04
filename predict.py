@@ -1,5 +1,4 @@
 def is_float(string):
-    print("test : " + string)
     try:
         float(string)
         return True
